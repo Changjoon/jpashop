@@ -1,16 +1,33 @@
+server:
+  port: 8081
+
 spring:
-  datasource:
-#   MySQL DB 설정
-    url: jdbc:mysql://localhost:3306/jpashop?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: root
-    password: 1234
-    driver-class-name: com.mysql.cj.jdbc.Driver
-#    H2 DB 설정
+#  datasource:
+##   MySQL DB 설정
+#    url: jdbc:mysql://localhost:3306/db_jpashop?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+#    username: root
+#    password: 1234
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+
+##    H2 DB 설정
 #    url: jdbc:h2:tcp://localhost/~/jpashop
 #    username: sa
 #    password:
 #    driver-class-name: org.h2.Driver
 
+#  jta:
+#    atomikos:
+#      datasource:
+#        jpashop:
+#          unique-resource-name: xaDataSourceJpashop
+#          xa-data-source-class-name: com.mysql.cj.jdbc.MysqlXADataSource
+#          xa-properties:
+#            url: jdbc:mysql://localhost:3306/db_jpashop
+#            user: root
+#            password: 1234
+#          min-pool-size: 5
+#          max-pool-size: 10
+#
   jpa:
     hibernate:
       ddl-auto: create
@@ -19,9 +36,17 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        dialect: org.hibernate.dialect.MySQL8Dialect
+#        dialect: org.hibernate.dialect.MySQL8Dialect
 #        H2 DB 설정
 #        dialect: org.hibernate.dialect.H2Dialect
+
+  sleuth:
+    sampler:
+      probability: 1.0
+
+  cloud:
+    compatibility-verifier:
+      enabled: false
 
 logging.level:
   org.hibernate.SQL: debug
