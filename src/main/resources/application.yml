@@ -1,25 +1,32 @@
+server:
+  port: 8091
 spring:
-  datasource:
-#   MySQL DB 설정
-    url: jdbc:mysql://localhost:3306/jpashop?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: root
-    password: 1234
-    driver-class-name: com.mysql.cj.jdbc.Driver
-#    H2 DB 설정
-#    url: jdbc:h2:tcp://localhost/~/jpashop
-#    username: sa
-#    password:
-#    driver-class-name: org.h2.Driver
-
-  jpa:
-    hibernate:
-      ddl-auto: create
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    properties:
-      hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.MySQL8Dialect
+  jta:
+    atomikos:
+      properties:
+        logBaseDir: jpashop-seoul
+        console_log_level: debug
+#  datasource:
+##   MySQL DB 설정
+#    url: jdbc:mysql://localhost:3306/jpashop?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+#    username: root
+#    password: 1234
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+##    H2 DB 설정
+##    url: jdbc:h2:tcp://localhost/~/jpashop
+##    username: sa
+##    password:
+##    driver-class-name: org.h2.Driver
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: create
+#      naming:
+#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+#    properties:
+#      hibernate:
+#        format_sql: true
+#        dialect: org.hibernate.dialect.MySQL8Dialect
 #        H2 DB 설정
 #        dialect: org.hibernate.dialect.H2Dialect
 
