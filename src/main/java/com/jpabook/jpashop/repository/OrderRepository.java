@@ -2,9 +2,9 @@ package com.jpabook.jpashop.repository;
 
 import com.jpabook.jpashop.domain.Member;
 import com.jpabook.jpashop.domain.Order;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.*;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;

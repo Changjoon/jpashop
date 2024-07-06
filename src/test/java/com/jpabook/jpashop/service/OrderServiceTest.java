@@ -1,7 +1,7 @@
 package com.jpabook.jpashop.service;
 
 import com.jpabook.jpashop.exception.NotEnoughStockException;
-import jpabook.jpashop.domain.*;
+import com.jpabook.jpashop.domain.*;
 import com.jpabook.jpashop.domain.item.Book;
 import com.jpabook.jpashop.domain.item.Item;
 import com.jpabook.jpashop.repository.OrderRepository;
@@ -16,6 +16,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import static org.junit.Assert.fail;
+import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
