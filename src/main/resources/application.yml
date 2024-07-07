@@ -1,11 +1,12 @@
 server:
   port: 8091
 spring:
+  main:
+    allow-bean-definition-overriding: true
   jta:
     atomikos:
       properties:
         logBaseDir: jpashop-seoul
-        console_log_level: debug
 #  datasource:
 ##   MySQL DB 설정
 #    url: jdbc:mysql://localhost:3306/jpashop?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
@@ -30,6 +31,10 @@ spring:
 #        H2 DB 설정
 #        dialect: org.hibernate.dialect.H2Dialect
 
+
+
 logging.level:
+  org.springframework: debug
   org.hibernate.SQL: debug
   org.hibernate.type: trace
+

@@ -14,17 +14,7 @@ public class JpashopApplication {
 
 	public static void main(String[] args) {
 		System.setProperty("com.atomikos.icatch.log_base_name", "jpashop-seoul");
+		System.setProperty("com.atomikos.icatch.rest_port_url", "http://localhost:8091");
 		SpringApplication.run(JpashopApplication.class, args);
-	}
-
-	@Bean
-	public JAXRSServerFactoryBean jaxRsServer() {
-		JAXRSServerFactoryBean sf = new JAXRSServerFactoryBean();
-		sf.setProvider(new JacksonJsonProvider());
-		sf.setProvider(new TransactionAwareRestContainerFilter());
-		sf.setProvider(new ParticipantsProvider());
-		sf.setResourceClasses(AtomikosRestPort.class);
-		sf.setAddress("/members");
-		return sf;
 	}
 }

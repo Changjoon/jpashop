@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.transaction.*;
 import javax.validation.Valid;
 
 @Controller
@@ -27,7 +28,7 @@ public class MemberController {
     }
 
     @PostMapping("/members/new")
-    public String create(@Valid MemberForm form, BindingResult result) {
+    public String create(@Valid MemberForm form, BindingResult result) throws HeuristicRollbackException, SystemException, HeuristicMixedException, NotSupportedException, RollbackException {
 
         if (result.hasErrors()) {
             return "members/createMemberForm";
@@ -49,7 +50,7 @@ public class MemberController {
     }
 
     @PostMapping("/members")
-    public ResponseEntity<String> createMember(@RequestBody MemberForm memberForm) {
+    public ResponseEntity<String> createMember(@RequestBody MemberForm memberForm) throws HeuristicRollbackException, SystemException, HeuristicMixedException, NotSupportedException, RollbackException {
         System.out.println("Received Member:");
         System.out.println("Name: " + memberForm.getName());
         System.out.println("City: " + memberForm.getCity());

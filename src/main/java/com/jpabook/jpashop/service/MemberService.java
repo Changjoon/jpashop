@@ -1,23 +1,23 @@
 package com.jpabook.jpashop.service;
 
+import com.atomikos.icatch.jta.UserTransactionManager;
 import com.jpabook.jpashop.repository.MemberRepository;
 import com.jpabook.jpashop.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.transaction.*;
+
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    @Transactional
-    public Long join(Member member) {
-//        validateDuplicatedMember(member);
+    public Long join(Member member) throws SystemException, NotSupportedException, HeuristicRollbackException, HeuristicMixedException, RollbackException {
         memberRepository.save(member);
         return member.getId();
     }
