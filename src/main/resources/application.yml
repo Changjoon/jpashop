@@ -3,6 +3,9 @@ server:
 spring:
   main:
     allow-bean-definition-overriding: true
+  jersey:
+    type: filter
+    application-path: /*
   jta:
     atomikos:
       properties:
@@ -34,7 +37,8 @@ spring:
 
 
 logging.level:
+  root: debug
   org.springframework: debug
   org.hibernate.SQL: debug
-  org.hibernate.type: trace
+  org.hibernate.type: debug
 
