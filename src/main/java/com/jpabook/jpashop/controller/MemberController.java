@@ -4,6 +4,7 @@ import com.jpabook.jpashop.service.MemberService;
 import com.jpabook.jpashop.domain.Address;
 import com.jpabook.jpashop.domain.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.*;
 import javax.validation.Valid;
@@ -20,6 +22,9 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @GetMapping("/members/new")
     public String createForm(Model model) {
@@ -49,7 +54,7 @@ public class MemberController {
         return "members/memberList";
     }
 
-    @PostMapping("/members")
+    @PostMapping("/members/member")
     public ResponseEntity<String> createMember(@RequestBody MemberForm memberForm) throws HeuristicRollbackException, SystemException, HeuristicMixedException, NotSupportedException, RollbackException {
         System.out.println("Received Member:");
         System.out.println("Name: " + memberForm.getName());
@@ -63,5 +68,29 @@ public class MemberController {
         memberService.join(member);
 
         return new ResponseEntity<>("Member created successfully", HttpStatus.CREATED);
+    }
+
+    @PostMapping("/members/chain")
+    public ResponseEntity<String> createMemberChain(@RequestBody MemberForm memberForm) throws HeuristicRollbackException, SystemException, HeuristicMixedException, NotSupportedException, RollbackException {
+        System.out.println("Received Member:");
+        System.out.println("Name: " + memberForm.getName());
+        System.out.println("City: " + memberForm.getCity());
+        System.out.println("Street: " + memberForm.getStreet());
+        System.out.println("Zipcode: " + memberForm.getZipcode());
+
+        Member member = new Member();
+        member.setName(memberForm.getName());
+        member.setAddress(new Address(memberForm.getCity(), memberForm.getStreet(), memberForm.getZipcode()));
+        memberService.join(member);
+
+        restTemplate.postForEntity("http://localhost:8092/members/member", memberForm, String.class);
+
+        return new ResponseEntity<>("Member created successfully", HttpStatus.CREATED);
+    }
+
+    @GetMapping("/members/latest")
+    public ResponseEntity<Member> latestMember() {
+        Member member = memberService.findLatestMembers();
+        return new ResponseEntity<>(member, HttpStatus.OK);
     }
 }

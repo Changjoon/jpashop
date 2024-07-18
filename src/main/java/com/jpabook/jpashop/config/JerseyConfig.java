@@ -15,6 +15,6 @@ public class JerseyConfig extends ResourceConfig {
         register(ParticipantsProvider.class);
         register(AtomikosRestPort.class);
         property(ServletProperties.FILTER_FORWARD_ON_404, true);
-        property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "/members");
+        property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "/members/.*");
     }
 }

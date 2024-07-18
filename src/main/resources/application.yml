@@ -37,7 +37,6 @@ spring:
 
 
 logging.level:
-  root: debug
   org.springframework: debug
   org.hibernate.SQL: debug
   org.hibernate.type: debug

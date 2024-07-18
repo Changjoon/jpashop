@@ -40,7 +40,7 @@ public class XAJpaConfig {
         Properties xaProperties = new Properties();
         xaProperties.setProperty("URL", "jdbc:postgresql://localhost:5432/db_jpashop_seoul");
         xaProperties.setProperty("databaseName", "db_jpashop_seoul");
-        xaProperties.setProperty("user", "postgres");
+        xaProperties.setProperty("user", "baek");
         xaProperties.setProperty("password", "1234");
         return xaProperties;
     }

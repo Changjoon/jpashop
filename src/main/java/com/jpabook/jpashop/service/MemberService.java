@@ -37,6 +37,10 @@ public class MemberService {
         return memberRepository.findOne(memberId);
     }
 
+    public Member findLatestMembers() {
+        return memberRepository.findTopByOrderByIdDesc();
+    }
+
     @Transactional
     public void update(Long id, String name) {
         Member member = memberRepository.findOne(id);
