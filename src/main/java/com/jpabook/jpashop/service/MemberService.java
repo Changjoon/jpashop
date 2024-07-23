@@ -1,7 +1,12 @@
 package com.jpabook.jpashop.service;
 
-import com.jpabook.jpashop.repository.MemberRepository;
 import com.jpabook.jpashop.domain.Member;
+import com.jpabook.jpashop.repository.MemberRepository;
+import jakarta.persistence.RollbackException;
+import jakarta.transaction.HeuristicMixedException;
+import jakarta.transaction.HeuristicRollbackException;
+import jakarta.transaction.NotSupportedException;
+import jakarta.transaction.SystemException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,15 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    @Transactional
-    public Long join(Member member) {
-        validateDuplicatedMember(member);
+    public Long join(Member member) throws SystemException, NotSupportedException, HeuristicRollbackException, HeuristicMixedException, RollbackException {
         memberRepository.save(member);
         return member.getId();
     }
@@ -37,9 +39,17 @@ public class MemberService {
         return memberRepository.findOne(memberId);
     }
 
+    public Member findLatestMembers() {
+        return memberRepository.findTopByOrderByIdDesc();
+    }
+
     @Transactional
     public void update(Long id, String name) {
         Member member = memberRepository.findOne(id);
         member.setName(name);
+    }
+
+    public void delete(Long id) {
+        memberRepository.deleteById(id);
     }
 }

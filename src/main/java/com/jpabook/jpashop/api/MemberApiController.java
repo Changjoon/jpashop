@@ -2,6 +2,10 @@ package com.jpabook.jpashop.api;
 
 import com.jpabook.jpashop.service.MemberService;
 import com.jpabook.jpashop.domain.Member;
+import jakarta.transaction.HeuristicMixedException;
+import jakarta.transaction.HeuristicRollbackException;
+import jakarta.transaction.NotSupportedException;
+import jakarta.transaction.SystemException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -47,13 +51,13 @@ public class MemberApiController {
     }
 
     @PostMapping("/api/v1/members")
-    public CreateMemberResponse saveMemberV1(@RequestBody @Valid Member member) {
+    public CreateMemberResponse saveMemberV1(@RequestBody @Valid Member member) throws HeuristicRollbackException, SystemException, HeuristicMixedException, NotSupportedException {
         Long id = memberService.join(member);
         return new CreateMemberResponse(id);
     }
 
     @PostMapping("/api/v2/members")
-    public CreateMemberResponse saveMemberV2(@RequestBody @Valid CreateMemberRequest request) {
+    public CreateMemberResponse saveMemberV2(@RequestBody @Valid CreateMemberRequest request) throws HeuristicRollbackException, SystemException, HeuristicMixedException, NotSupportedException {
 
         Member member = new Member();
         member.setName(request.getName());
