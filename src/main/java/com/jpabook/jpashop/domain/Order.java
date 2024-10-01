@@ -12,10 +12,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "orders")
-@Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
+@NoArgsConstructor
 public class Order {
 
+    @Getter
     @Id
     @GeneratedValue
     @Column(name = "order_id")
@@ -25,6 +26,7 @@ public class Order {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @Getter
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
@@ -34,6 +36,7 @@ public class Order {
 
     private LocalDateTime orderDate;
 
+    @Getter
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
@@ -60,7 +63,7 @@ public class Order {
         for (OrderItem orderItem : orderItems) {
             order.addOrderItem(orderItem);
         }
-        order.setStatus(OrderStatus.ORDER);
+        order.setStatus(OrderStatus.NEW);
         order.setOrderDate(LocalDateTime.now());
         return order;
     }
@@ -70,7 +73,7 @@ public class Order {
             throw new IllegalStateException("이미 배송완료된 상품은 취소가 불가능합니다.");
         }
 
-        this.setStatus(OrderStatus.CANCEL);
+        this.setStatus(OrderStatus.CANCELLED);
         for (OrderItem orderItem : orderItems) {
             orderItem.cancel();
         }
@@ -85,5 +88,4 @@ public class Order {
 
         return totalPrice;
     }
-
 }

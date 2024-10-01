@@ -13,7 +13,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
 @Getter @Setter
-public abstract class Item {
+public class Item {
 
     @Id @GeneratedValue
     @Column(name = "item_id")
@@ -25,6 +25,13 @@ public abstract class Item {
 
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();
+
+    public Item(String testItem, int i, int i1) {
+    }
+
+    public Item() {
+
+    }
 
     public void addStock(int quantity) {
         this.stockQuantity += quantity;
